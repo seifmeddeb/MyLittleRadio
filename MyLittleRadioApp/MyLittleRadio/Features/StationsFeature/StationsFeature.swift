@@ -7,12 +7,12 @@ struct StationsFeature {
 
     @ObservableState
     struct State: Equatable {
-        var stations: [Station] = []
+        var stations: [StationViewModel] = []
     }
 
     enum Action {
         case fetchStations
-        case setStations([Station])
+        case setStations([StationViewModel])
 
         case task
     }
@@ -28,7 +28,8 @@ struct StationsFeature {
                 case .fetchStations:
                     return .run { send in
                         if let stations = try? await apiClient.fetchStations() {
-                            await send(.setStations(stations))
+                            let stationViewModels = stations.map { StationViewModel(from: $0) }
+                            await send(.setStations(stationViewModels))
                         }
                     }
                 case let .setStations(stations):

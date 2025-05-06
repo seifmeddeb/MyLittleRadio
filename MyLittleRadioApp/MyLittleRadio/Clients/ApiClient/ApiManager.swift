@@ -4,21 +4,23 @@ import Foundation
 
 final class ApiManager {
 
-    func fetchStations() async -> [Station] {
-        let mockedData = [
-            Station(
-                id: "1",
-                title: "Radio 1"
-            ),
-            Station(
-                id: "2",
-                title: "Radio 2"
-            ),
-            Station(
-                id: "3",
-                title: "Radio 3"
-            )
-        ]
-        return mockedData
+    func fetchStations() async throws -> [Station] {
+        guard let url = URL(string: ApiEndpoints.stations.url) else { return [] }
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoded = try JSONDecoder().decode(StationListResponse.self, from: data)
+        return decoded.stations.map { Station(from: $0) }
     }
+    
+    enum ApiEndpoints {
+        
+        case stations
+        
+        var url: String {
+            switch self {
+            case .stations:
+                "http://localhost:3000/stations"
+            }
+        }
+    }
+    
 }

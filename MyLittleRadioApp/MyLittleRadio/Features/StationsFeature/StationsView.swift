@@ -8,7 +8,7 @@ struct StationsView: View {
 
     @Perception.Bindable private var store: StoreOf<StationsFeature>
 
-    @State var selectedStation: Station?
+    @State var selectedStation: StationViewModel?
 
     init(store: StoreOf<StationsFeature>) {
         self.store = store
