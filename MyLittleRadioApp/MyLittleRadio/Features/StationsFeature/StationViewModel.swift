@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct StationViewModel: Equatable, Identifiable {
+struct StationViewModel: Equatable, Hashable, Identifiable {
     let id: String
     let title: String
 }
