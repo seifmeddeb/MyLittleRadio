@@ -17,19 +17,31 @@ struct StationsView: View {
             NavigationStackStore(
                 store.scope(state: \.path, action: \.path)
             ) {
-                List {
-                    ForEach(store.stations) { station in
-                        HStack(spacing: 8) {
-                            Button(station.title) {
-                                store.send(.stationTapped(station))
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(store.stations) { item in
+                            GeometryReader { geo in
+                                let minX = geo.frame(in: .global).minX
+                                let screenWidth = UIScreen.main.bounds.width
+                                let distanceFromCenter = abs(minX - screenWidth / 2 + 150)
+                                let scale = max(0.9, 1.1 - (distanceFromCenter / screenWidth))
+
+                                Button {
+                                    store.send(.stationTapped(item))
+                                } label: {
+                                    StationCardView(viewModel: item)
+                                        .scaleEffect(scale)
+                                        .animation(.easeOut(duration: 2), value: scale)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            Spacer()
-                            Image(systemName: "chevron.right")
+                            .frame(width: 300)
                         }
-                        .frame(height: 50)
+
                     }
+                    .padding()
                 }
-                .navigationTitle("Stations")
+                .navigationTitle("My Little Radio")
             } destination: { store in
                 StationDetailView(store: store)
             }
