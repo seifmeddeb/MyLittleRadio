@@ -13,9 +13,9 @@ struct Station: Equatable, Identifiable {
     let streamUrl: String
     let analytics: Analytics
     let liveRule: String
-    let colors: Colors
+    let primaryColor: String
     let isMusical: Bool
-    let assets: Assets?
+    let imageUrl: String
     
     // MARK: - Init
     
@@ -26,12 +26,12 @@ struct Station: Equatable, Identifiable {
         self.hasTimeshift = response.hasTimeshift ?? false
         self.shortTitle = response.shortTitle ?? ""
         self.type = response.type ?? ""
-        self.streamUrl = response.type ?? ""
+        self.streamUrl = response.streamUrl ?? ""
         self.analytics = Analytics(from: response.analytics)
-        self.liveRule = response.type ?? ""
-        self.colors = Colors(primary: response.colors?.primary ?? "")
+        self.liveRule = response.liveRule ?? ""
+        self.primaryColor = response.colors?.primary ?? ""
         self.isMusical = response.isMusical ?? false
-        self.assets = Assets(squareImageUrl: response.assets?.squareImageUrl ?? "")
+        self.imageUrl = response.assets?.squareImageUrl ?? ""
     }
 }
 
@@ -44,11 +44,6 @@ struct Analytics: Equatable {
         self.value = response?.value ?? ""
         self.stationAudienceId = response?.stationAudienceId ?? 0
     }
-}
-
-// MARK: - Assets
-struct Assets: Equatable {
-    let squareImageUrl: String
 }
 
 // MARK: - Colors
