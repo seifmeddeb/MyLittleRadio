@@ -47,12 +47,12 @@ struct StationsView: View {
                 }
                 .background(.black)
                 .navigationTitle("Bonjour")
+                .navigationBarLargeTitleStyle()
             } destination: { store in
                 WithPerceptionTracking {
                     StationDetailView(store: store)
                 }
             }
-            .navigationBarStyle()
             .task {
                 store.send(.task)
             }

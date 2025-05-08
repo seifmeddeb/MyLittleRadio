@@ -39,9 +39,8 @@ struct StationsFeature {
                     return .none
                 
                 case let .stationTapped(viewModel):
-                    // Append a new StationDetailFeature.State when tapping on a station
                     let stationDetailState = StationDetailFeature.State(viewModel: viewModel)
-                    state.path.append(stationDetailState)  // Adding the detail state to path stack
+                    state.path.append(stationDetailState)
                     return .none
 
                 case .path:

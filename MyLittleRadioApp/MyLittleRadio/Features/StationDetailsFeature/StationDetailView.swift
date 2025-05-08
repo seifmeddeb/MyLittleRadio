@@ -6,12 +6,11 @@ import ComposableArchitecture
 
 struct StationDetailView: View {
     @Perception.Bindable var store: StoreOf<StationDetailFeature>
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                Text(store.viewModel.title)
-                    .padding()
                 Button("Play Stream") {
                     store.send(.playButtonTapped(store.viewModel.streamUrl))
                 }
@@ -22,6 +21,13 @@ struct StationDetailView: View {
                 }
                 .padding()
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.black)
+            .navigationTitle(store.viewModel.title)
+            .navigationBarInlineTitleStyle()
+            .modifier(CustomBackButton(action: {
+                dismiss()
+            }))
         }
     }
 }
