@@ -11,6 +11,16 @@ struct StationDetailView: View {
         WithPerceptionTracking {
             VStack {
                 Text(store.viewModel.title)
+                    .padding()
+                Button("Play Stream") {
+                    store.send(.playButtonTapped)
+                }
+                .padding()
+                
+                Button("Stop Stream") {
+                    store.send(.stopButtonTapped)
+                }
+                .padding()
             }
         }
     }
