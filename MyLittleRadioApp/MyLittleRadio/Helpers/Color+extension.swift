@@ -1,3 +1,5 @@
+// Copyright © Radio France. All rights reserved.
+
 import SwiftUI
 
 extension Color {

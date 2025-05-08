@@ -18,36 +18,45 @@ struct StationsView: View {
                 store.scope(state: \.path, action: \.path)
             ) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(store.stations) { item in
-                            GeometryReader { geo in
-                                let minX = geo.frame(in: .global).minX
-                                let screenWidth = UIScreen.main.bounds.width
-                                let distanceFromCenter = abs(minX - screenWidth / 2 + 150)
-                                let scale = max(0.9, 1.1 - (distanceFromCenter / screenWidth))
-
-                                Button {
-                                    store.send(.stationTapped(item))
-                                } label: {
-                                    StationCardView(viewModel: item)
-                                        .scaleEffect(scale)
-                                        .animation(.easeOut(duration: 2), value: scale)
+                    LazyHStack(spacing: 16) {
+                        WithPerceptionTracking {
+                            let stations = store.stations
+                            ForEach(stations) { item in
+                                GeometryReader { geo in
+                                    WithPerceptionTracking {
+                                        let minX = geo.frame(in: .global).minX
+                                        let screenWidth = UIScreen.main.bounds.width
+                                        let distanceFromCenter = abs(minX - screenWidth / 2 + 150)
+                                        let scale = max(0.9, 1.1 - (distanceFromCenter / screenWidth))
+                                        
+                                        Button {
+                                            store.send(.stationTapped(item))
+                                        } label: {
+                                            StationCardView(viewModel: item)
+                                                .scaleEffect(scale)
+                                                .animation(.easeOut(duration: 2), value: scale)
+                                        }
+                                        .buttonStyle(.plain)
+                                    }
                                 }
-                                .buttonStyle(.plain)
+                                .frame(width: 300)
                             }
-                            .frame(width: 300)
                         }
-
                     }
                     .padding()
                 }
-                .navigationTitle("My Little Radio")
+                .background(.black)
+                .navigationTitle("Bonjour")
             } destination: { store in
-                StationDetailView(store: store)
+                WithPerceptionTracking {
+                    StationDetailView(store: store)
+                }
             }
+            .navigationBarStyle()
             .task {
                 store.send(.task)
             }
         }
     }
 }
+

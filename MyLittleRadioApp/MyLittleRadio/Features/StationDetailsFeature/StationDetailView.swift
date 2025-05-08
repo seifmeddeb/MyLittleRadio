@@ -13,7 +13,7 @@ struct StationDetailView: View {
                 Text(store.viewModel.title)
                     .padding()
                 Button("Play Stream") {
-                    store.send(.playButtonTapped)
+                    store.send(.playButtonTapped(store.viewModel.streamUrl))
                 }
                 .padding()
                 

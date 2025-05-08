@@ -11,9 +11,9 @@ struct StationCardView: View {
             
             Text(viewModel.title)
                 .font(
-                    .system(
-                        size: 20,
-                        weight: .bold
+                    .custom(
+                        "AvenirNext-Bold",
+                        size: 20
                     )
                 )
                 .foregroundColor(.white)
@@ -44,7 +44,7 @@ struct StationCardView: View {
         )
         .background(viewModel.primaryColor.opacity(0.8))
         .cornerRadius(12)
-        .padding(.vertical, 16)
+        .padding(.vertical, 100)
     }
 }
 

@@ -13,7 +13,7 @@ struct StationDetailFeature {
     }
 
     enum Action {
-        case playButtonTapped
+        case playButtonTapped(URL?)
         case stopButtonTapped
     }
     
@@ -25,10 +25,10 @@ struct StationDetailFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .playButtonTapped:
-                return .run { [state] _ in
+            case let .playButtonTapped(streamUrl):
+                return .run { _ in
                     do {
-                        try await audioClient.play(state.viewModel.streamUrl)
+                        try await audioClient.play(streamUrl)
                     } catch {
                         print("❌ Error playing stream: \(error)")
                     }
