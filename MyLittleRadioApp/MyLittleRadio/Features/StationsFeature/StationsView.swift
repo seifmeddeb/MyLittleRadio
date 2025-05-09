@@ -60,3 +60,25 @@ struct StationsView: View {
     }
 }
 
+#Preview {
+    StationsView(
+        store: Store<StationsFeature.State, StationsFeature.Action>(
+            initialState: StationsFeature.State(
+                stations: [
+                    StationViewModel(
+                        id: UUID().uuidString,
+                        title: "ICI",
+                        shortTitle: "ICI",
+                        streamUrl: nil,
+                        imageURL: nil,
+                        primaryColor: .blue
+                    )
+                ]
+            ),
+            reducer: {
+                StationsFeature()
+            }
+        )
+    )
+}
+

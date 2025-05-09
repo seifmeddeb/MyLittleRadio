@@ -9,14 +9,22 @@ struct StationCardView: View {
     var body: some View {
         VStack(spacing: 16) {
             
-            Text(viewModel.title)
-                .font(
-                    .custom(
-                        "AvenirNext-Bold",
-                        size: 20
+            HStack {
+                Text(viewModel.shortTitle)
+                    .font(
+                        .custom(
+                            "AvenirNext-Bold",
+                            size: 20
+                        )
                     )
-                )
-                .foregroundColor(.white)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Image(systemName: viewModel.categorySymbolName)
+                    .foregroundColor(.white)
+                
+            }
             
             AsyncImage(url: viewModel.imageURL) { image in
                     image.resizable()
@@ -42,7 +50,7 @@ struct StationCardView: View {
             maxWidth: .infinity,
             maxHeight: .infinity
         )
-        .background(viewModel.primaryColor.opacity(0.8))
+        .background(viewModel.secondaryColor)
         .cornerRadius(12)
         .padding(.vertical, 100)
     }
@@ -53,6 +61,7 @@ struct StationCardView: View {
         viewModel: StationViewModel(
             id: UUID().uuidString,
             title: "ICI",
+            shortTitle: "ICI",
             streamUrl: nil,
             imageURL: nil,
             primaryColor: .blue
