@@ -10,11 +10,15 @@ struct StationDetailFeature {
     struct State: Equatable, Hashable, Identifiable {
         let id = UUID()
         let viewModel: StationViewModel
+        var isPlaying = false
+        var isLoading = false
     }
 
     enum Action {
         case playButtonTapped(URL?)
         case stopButtonTapped
+        case didStartPlaying
+        case didStopPlaying
     }
     
     // MARK: - Dependencies
@@ -26,22 +30,36 @@ struct StationDetailFeature {
         Reduce { state, action in
             switch action {
             case let .playButtonTapped(streamUrl):
-                return .run { _ in
+                state.isLoading = true
+                return .run { send in
                     do {
                         try await audioClient.play(streamUrl)
+                        await send(.didStartPlaying)
                     } catch {
                         print("❌ Error playing stream: \(error)")
                     }
                 }
 
             case .stopButtonTapped:
-                return .run { _ in
+                state.isLoading = true
+                return .run { send in
                     do {
                         try await audioClient.stop()
+                        await send(.didStopPlaying)
                     } catch {
                         print("❌ Error stopping stream: \(error)")
                     }
                 }
+                
+            case .didStartPlaying:
+                state.isLoading = false
+                state.isPlaying = true
+                return .none
+                
+            case .didStopPlaying:
+                state.isLoading = false
+                state.isPlaying = false
+                return .none
             }
         }
     }

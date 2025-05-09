@@ -10,16 +10,8 @@ struct StationDetailView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack {
-                Button("Play Stream") {
-                    store.send(.playButtonTapped(store.viewModel.streamUrl))
-                }
-                .padding()
-                
-                Button("Stop Stream") {
-                    store.send(.stopButtonTapped)
-                }
-                .padding()
+            VStack(spacing: 20) {
+                AudioControlsView(store: store)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.black)
