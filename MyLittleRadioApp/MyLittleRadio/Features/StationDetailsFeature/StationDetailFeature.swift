@@ -19,6 +19,12 @@ struct StationDetailFeature {
         case stopButtonTapped
         case didStartPlaying
         case didStopPlaying
+        case delegate(DelegateAction)
+
+            enum DelegateAction {
+                case startedPlaying(StationViewModel)
+                case stoppedPlaying
+            }
     }
     
     // MARK: - Dependencies
@@ -54,11 +60,14 @@ struct StationDetailFeature {
             case .didStartPlaying:
                 state.isLoading = false
                 state.isPlaying = true
-                return .none
+                return .send(.delegate(.startedPlaying(state.viewModel)))
                 
             case .didStopPlaying:
                 state.isLoading = false
                 state.isPlaying = false
+                return .send(.delegate(.stoppedPlaying))
+                
+            case .delegate:
                 return .none
             }
         }

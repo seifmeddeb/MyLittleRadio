@@ -9,6 +9,7 @@ struct StationsFeature {
     struct State: Equatable {
         var stations: [StationViewModel] = []
         var path = StackState<StationDetailFeature.State>()
+        var currentlyPlayingStation: StationViewModel? = nil
     }
 
     enum Action {
@@ -27,29 +28,38 @@ struct StationsFeature {
     var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-                case .fetchStations:
-                    return .run { send in
-                        if let stations = try? await apiClient.fetchStations() {
-                            let stationViewModels = stations.map { StationViewModel(from: $0) }
-                            await send(.setStations(stationViewModels))
-                        }
+            case .fetchStations:
+                return .run { send in
+                    if let stations = try? await apiClient.fetchStations() {
+                        let stationViewModels = stations.map { StationViewModel(from: $0) }
+                        await send(.setStations(stationViewModels))
                     }
-                case let .setStations(stations):
-                    state.stations = stations
-                    return .none
+                }
+            case let .setStations(stations):
+                state.stations = stations
+                return .none
                 
-                case let .stationTapped(viewModel):
-                    let stationDetailState = StationDetailFeature.State(viewModel: viewModel)
-                    state.path.append(stationDetailState)
-                    return .none
-
-                case .path:
-                    return .none
-
-                case .task:
-                    return .run { send in
-                        await send(.fetchStations)
-                    }
+            case let .stationTapped(viewModel):
+                let isCurrentlyPlaying = viewModel == state.currentlyPlayingStation
+                let stationDetailState = StationDetailFeature.State(viewModel: viewModel, isPlaying: isCurrentlyPlaying)
+                state.path.append(stationDetailState)
+                return .none
+                
+            case let .path(.element(_, .delegate(.startedPlaying(station)))):
+                state.currentlyPlayingStation = station
+                return .none
+                
+            case .path(.element(_, .delegate(.stoppedPlaying))):
+                state.currentlyPlayingStation = nil
+                return .none
+                
+            case .path:
+                return .none
+                
+            case .task:
+                return .run { send in
+                    await send(.fetchStations)
+                }
             }
         }
         .forEach(\.path, action: \.path) {

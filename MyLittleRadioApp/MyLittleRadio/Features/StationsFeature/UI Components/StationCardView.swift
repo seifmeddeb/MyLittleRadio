@@ -26,22 +26,12 @@ struct StationCardView: View {
                 
             }
             
-            AsyncImage(url: viewModel.imageURL) { image in
-                    image.resizable()
-                         .scaledToFit()
-                         .frame(height: 200)
-                         .cornerRadius(12)
-                } placeholder: {
-                    Image(systemName: "radio.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                        .foregroundColor(.white.opacity(0.5))
-                }
+            AsyncImageView(url: viewModel.imageURL)
                 .frame(
                     maxWidth: .infinity,
                     maxHeight: .infinity
                 )
+                .padding()
                 .background(viewModel.primaryColor)
                 .cornerRadius(12)
         }
@@ -52,7 +42,7 @@ struct StationCardView: View {
         )
         .background(viewModel.secondaryColor)
         .cornerRadius(12)
-        .padding(.vertical, 100)
+        .padding(.vertical, 20)
     }
 }
 

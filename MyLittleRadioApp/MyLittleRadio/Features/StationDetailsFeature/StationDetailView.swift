@@ -54,7 +54,6 @@ struct StationDetailView: View {
             .navigationBarInlineTitleStyle()
             .modifier(CustomBackButton(action: {
                 dismiss()
-                store.send(.stopButtonTapped)
             }))
         }
     }
