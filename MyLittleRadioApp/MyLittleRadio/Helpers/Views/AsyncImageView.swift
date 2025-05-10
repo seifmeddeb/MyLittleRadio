@@ -15,5 +15,6 @@ struct AsyncImageView: View {
                 .scaledToFit()
                 .foregroundColor(.white.opacity(0.5))
         }
+        .cornerRadius(12)
     }
 }

@@ -11,21 +11,12 @@ struct StationDetailView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 20) {
-                AsyncImage(url: store.viewModel.imageURL) { image in
-                        image.resizable()
-                             .scaledToFit()
-                             .frame(height: 200)
-                    } placeholder: {
-                        Image(systemName: "radio.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                            .foregroundColor(.white.opacity(0.5))
-                    }
+                AsyncImageView(url: store.viewModel.imageURL)
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: 300
                     )
+                    .padding(50)
                     .background(store.viewModel.primaryColor)
                 
                 HStack(spacing: 20) {

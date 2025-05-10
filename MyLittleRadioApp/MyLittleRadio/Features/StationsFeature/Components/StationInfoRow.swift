@@ -2,9 +2,9 @@
 
 import SwiftUI
 
-struct StationCardView: View {
+struct StationInfoRow: View {
     
-    var viewModel: StationViewModel
+    let viewModel: StationViewModel
     
     var body: some View {
         VStack(spacing: 16) {
@@ -47,7 +47,7 @@ struct StationCardView: View {
 }
 
 #Preview {
-    StationCardView(
+    StationInfoRow(
         viewModel: StationViewModel(
             id: UUID().uuidString,
             title: "ICI",
