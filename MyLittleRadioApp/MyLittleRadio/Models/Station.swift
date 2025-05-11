@@ -4,6 +4,8 @@ import Foundation
 
 struct Station: Equatable, Identifiable {
     
+    // MARK: - Properties
+    
     let id: String
     let brandId: String
     let title: String

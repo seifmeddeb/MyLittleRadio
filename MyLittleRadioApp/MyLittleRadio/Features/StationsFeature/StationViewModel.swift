@@ -5,6 +5,8 @@ import SwiftUI
 
 struct StationViewModel: Equatable, Hashable, Identifiable {
     
+    // MARK: - Properties
+    
     let id: String
     let title: String
     let shortTitle: String

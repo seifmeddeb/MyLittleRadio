@@ -10,19 +10,23 @@ struct AudioControlsView: View {
         WithPerceptionTracking {
             VStack {
                 if store.isLoading {
-                    ProgressView()
-                        .tint(.white)
+                    WithPerceptionTracking {
+                        ProgressView()
+                            .tint(.white)
+                    }
                 } else {
                     Button {
                         store.send(store.isPlaying ? .stopButtonTapped : .playButtonTapped(store.viewModel.streamUrl))
                     } label: {
-                        Image(systemName: store.isPlaying ? "stop.fill" : "play.fill")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.black)
-                            .padding()
-                            .background(.white)
-                            .clipShape(Circle())
+                        WithPerceptionTracking {
+                            Image(systemName: store.isPlaying ? "stop.fill" : "play.fill")
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundColor(.black)
+                                .padding()
+                                .background(.white)
+                                .clipShape(Circle())
+                        }
                     }
                     .buttonStyle(.plain)
                 }
@@ -47,8 +51,7 @@ struct AudioControlsView: View {
                 isPlaying: false,
                 isLoading: false
             ),
-            reducer: { StationDetailFeature()
-            }
+            reducer: { StationDetailFeature() }
         )
     )
     .padding()

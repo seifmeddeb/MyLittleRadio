@@ -2,10 +2,12 @@
 
 import Foundation
 
+// MARK: - StationListResponse
 struct StationListResponse: Codable {
     let stations: [StationResponse]
 }
 
+// MARK: - StationResponse
 struct StationResponse: Codable {
     let id: String?
     let brandId: String?

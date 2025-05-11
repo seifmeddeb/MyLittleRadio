@@ -8,6 +8,8 @@ struct StationsView: View {
     
     @Perception.Bindable private var store: StoreOf<StationsFeature>
     
+    // MARK: - Init
+    
     init(store: StoreOf<StationsFeature>) {
         self.store = store
     }
