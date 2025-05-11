@@ -15,6 +15,8 @@ Voici ma proposition pour le projet de test. J’ai pris beaucoup de plaisir à 
 ### ⏱️ Temps estimé :
 Environ **20 heures** (en parallèle du travail… et d’un récent mariage 🎉)
 
+⚠️ je n'ai pas pu rendre le projet privé car c'est un fork d'un projet public
+
 ---
 
 Merci pour votre confiance,  
