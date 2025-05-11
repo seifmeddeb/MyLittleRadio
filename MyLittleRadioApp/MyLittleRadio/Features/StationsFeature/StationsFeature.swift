@@ -1,6 +1,7 @@
 // Copyright © Radio France. All rights reserved.
 
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct StationsFeature {
@@ -12,10 +13,11 @@ struct StationsFeature {
         var currentlyPlayingStation: StationViewModel? = nil
     }
 
-    enum Action {
+    enum Action: Equatable {
         case fetchStations
         case setStations([StationViewModel])
         case stationTapped(StationViewModel)
+        case displayCurrentlyPlayingStation
         case path(StackAction<StationDetailFeature.State, StationDetailFeature.Action>)
         case task
     }
@@ -41,7 +43,20 @@ struct StationsFeature {
                 
             case let .stationTapped(viewModel):
                 let isCurrentlyPlaying = viewModel == state.currentlyPlayingStation
-                let stationDetailState = StationDetailFeature.State(viewModel: viewModel, isPlaying: isCurrentlyPlaying)
+                let stationDetailState = StationDetailFeature.State(
+                    viewModel: viewModel,
+                    isPlaying: isCurrentlyPlaying
+                )
+                state.path.append(stationDetailState)
+                return .none
+                
+            case .displayCurrentlyPlayingStation:
+                guard let station = state.currentlyPlayingStation else { return .none }
+                
+                let stationDetailState = StationDetailFeature.State(
+                    viewModel: station,
+                    isPlaying: true
+                )
                 state.path.append(stationDetailState)
                 return .none
                 

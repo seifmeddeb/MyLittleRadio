@@ -21,8 +21,7 @@ struct StationsView: View {
                         CurrentlyPlayingView(
                             stationViewModel: store.currentlyPlayingStation,
                             action: {
-                                guard let station = store.currentlyPlayingStation else { return }
-                                store.send(.stationTapped(station))
+                                store.send(.displayCurrentlyPlayingStation)
                             }
                         )
                         

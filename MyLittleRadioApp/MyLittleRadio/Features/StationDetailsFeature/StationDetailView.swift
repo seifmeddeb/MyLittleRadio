@@ -63,7 +63,8 @@ struct StationDetailView: View {
                     primaryColor: .blue
                 )
             ),
-            reducer: { StationDetailFeature() }
+            reducer: { StationDetailFeature()
+            }
         )
     )
 }

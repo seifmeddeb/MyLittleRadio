@@ -7,21 +7,20 @@ import ComposableArchitecture
 struct StationDetailFeature {
 
     @ObservableState
-    struct State: Equatable, Hashable, Identifiable {
-        let id = UUID()
+    struct State: Equatable, Hashable {
         let viewModel: StationViewModel
         var isPlaying = false
         var isLoading = false
     }
 
-    enum Action {
+    enum Action: Equatable {
         case playButtonTapped(URL?)
         case stopButtonTapped
         case didStartPlaying
         case didStopPlaying
         case delegate(DelegateAction)
 
-            enum DelegateAction {
+        enum DelegateAction: Equatable {
                 case startedPlaying(StationViewModel)
                 case stoppedPlaying
             }

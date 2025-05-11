@@ -47,7 +47,8 @@ struct AudioControlsView: View {
                 isPlaying: false,
                 isLoading: false
             ),
-            reducer: { StationDetailFeature() }
+            reducer: { StationDetailFeature()
+            }
         )
     )
     .padding()
