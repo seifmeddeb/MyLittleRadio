@@ -71,6 +71,7 @@ struct CurrentlyPlayingView: View {
             }
             .padding(16)
             .opacity(opacity)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
